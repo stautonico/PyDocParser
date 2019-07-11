@@ -116,4 +116,5 @@ V1.0 (7/11/19) Initial release
 #### To-Do
 
 - [ ] Change function names to more closely resemble those in the PHP/Node/AJAX clients
-- [ ] Update setup.py to include install requirements
+- [x] Update setup.py to include install requirements
+- [ ] Fix README.md to work better on [PyPi](https://pypi.org/project/PyDocParser/)
