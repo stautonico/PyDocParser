@@ -19,7 +19,7 @@
 
 **<u>Installation for general usage</u>**:
 
-*Note: pydocparser was only tested for python3 (not guaranteed to work for [python2](https://www.jetbrains.com/research/python-developers-survey-2018/))
+**Note:** pydocparser was only tested for python3 (not guaranteed to work for [python2](https://www.jetbrains.com/research/python-developers-survey-2018/))
 
 `pip install pydocparser` or if you have python3 `pip3 install pydocparser`
 
