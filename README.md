@@ -12,6 +12,7 @@
 * [License](#License)
 * [Changelog](#Changelog)
 * [To-Do](#To-Do)
+* [Documentation](https://github.com/tman540/PyDocParser/blob/master/docs/PyDocParser%20Documentation.md)
 
 <br>
 
@@ -110,6 +111,7 @@ This library is available as open source un the [MIT License](https://github.com
 #### Changelog
 
 V1.0 (7/11/19) Initial release
+
 [V1.1 (7/12/19) Bug Fixes + New Functions](https://docparser.tautonico.tech/changelog)
 <br>
 
