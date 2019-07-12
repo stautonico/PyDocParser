@@ -6,12 +6,14 @@ import requests
 __author__ = "Steve Tautonico"
 __contact__ = "stautonico@gmail.com"
 __date__ = "7/11/19"
+__version__ = 1.1
 
 
 class Parser:
     """
     Python client for the docparser API
     """
+
     def __init__(self):
         """
         Constructor for the Parser class
@@ -68,7 +70,7 @@ class Parser:
         if success:
             return loads(result.text)["msg"]
 
-    def parsers(self, *verbose) -> dict or list:
+    def get_parsers(self, *verbose) -> dict or list:
         """
         Returns a list of all parsers available
         :param verbose: Enables verbose mode which returns raw json data (dict) from the request (with ids, label, etc)
@@ -111,10 +113,34 @@ class Parser:
         else:
             return None
 
+    def upload_id(self, file, parser_id) -> str or None:
+        """
+        Upload a file to docparser
+        :param file: The name of the file to upload
+        :type file: str
+        :param parser_id: The id of the parser to send the file to
+        :type parser_id: str
+        :return: The file id if the upload was successful, otherwise None
+        """
+        with open(file, "rb") as f:
+            b64data = base64.b64encode(f.read())
+        payload = {
+            "file_content": b64data,
+            "file_name": file
+        }
+        result = requests.post("https://api.docparser.com/v1/document/upload/{}".format(parser_id),
+                               auth=self.AUTH, data=payload)
+        success = self.check_request(result)
+        if success:
+            result_loaded = loads(result.text)
+            return result_loaded["id"]
+        else:
+            return None
+
     def fetch(self, parser, doc_id) -> dict or None:
         """
         Retrieves the parsed data from a specific file (only one)
-        :param parser: The name parser that was used to parse the file
+        :param parser: The name of the parser that was used to parse the file
         :type parser: str
         :param doc_id: ID of the doc to retrieve
         :type doc_id: str
@@ -124,7 +150,31 @@ class Parser:
         result = requests.get("https://api.docparser.com/v1/results/{}/{}".format(parser_id, doc_id), auth=self.AUTH)
         success = self.check_request(result)
         if success:
-            return loads(result.text)[0]
+            try:
+                return loads(result.text)[0]
+            except KeyError:
+                print("No such document exists")
+                return None
+        else:
+            return None
+
+    def fetch_id(self, parser_id, doc_id) -> dict or None:
+        """
+        Retrieves the parsed data from a specific file (only one)
+        :param parser_id: The id of the parser that was used to parse the file
+        :type parser_id: str
+        :param doc_id: ID of the doc to retrieve
+        :type doc_id: str
+        :return: The data parsed from the file if successful, otherwise None
+        """
+        result = requests.get("https://api.docparser.com/v1/results/{}/{}".format(parser_id, doc_id), auth=self.AUTH)
+        success = self.check_request(result)
+        if success:
+            try:
+                return loads(result.text)[0]
+            except KeyError:
+                print("No such document exists")
+                return None
         else:
             return None
 
@@ -136,6 +186,20 @@ class Parser:
         :return: A list of all the data from the parser if there is data, otherwise none
         """
         parser_id = self.find_parser_id(parser)
+        result = requests.get("https://api.docparser.com/v1/results/{}".format(parser_id), auth=self.AUTH)
+        success = self.check_request(result)
+        if success:
+            return loads(result.text)
+        else:
+            return None
+
+    def fetch_all_id(self, parser_id) -> list or None:
+        """
+        Retrieves all the parsed data currently in a parser
+        :param parser_id: The id of the parser to retrieve that data from
+        :type parser_id: str
+        :return: A list of all the data from the parser if there is data, otherwise none
+        """
         result = requests.get("https://api.docparser.com/v1/results/{}".format(parser_id), auth=self.AUTH)
         success = self.check_request(result)
         if success:

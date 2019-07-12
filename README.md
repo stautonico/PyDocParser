@@ -1,4 +1,4 @@
-![DocParser Logo](img/logo.png)
+![DocParser Logo](https://github.com/tman540/PyDocParser/blob/master/img/logo.png?raw=true)
 
 ## Unofficial python client for the Docparser API
 
@@ -17,7 +17,7 @@
 
 #### Installation
 
-**<u>Installation for general usage</u>**:
+**__Installation for general usage__**:
 
 **Note:** pydocparser was only tested for python3 (not guaranteed to work for [python2](https://www.jetbrains.com/research/python-developers-survey-2018/))
 
@@ -35,7 +35,7 @@ run `python setup.py install` or `python3 setup.py install`
 
 <br>
 
-**<u>Installation for development:</u>**
+__**Installation for development:**__
 
 `git clone https://github.com/tman540/pydocparser`
 
@@ -74,7 +74,7 @@ If `parser.ping()` returns ‘pong’, then you have a successful connection to 
 You can get a list of current parsers like this:
 
 ```python
-parsers = parser.parsers()
+parsers = parser.get_parsers()
 ```
 
 This will return a list of the names of all available parsers.
@@ -110,11 +110,11 @@ This library is available as open source un the [MIT License](https://github.com
 #### Changelog
 
 V1.0 (7/11/19) Initial release
-
+[V1.1 (7/12/19) Bug Fixes + New Functions](https://docparser.tautonico.tech/changelog)
 <br>
 
 #### To-Do
 
 - [ ] Change function names to more closely resemble those in the PHP/Node/AJAX clients
 - [x] Update setup.py to include install requirements
-- [ ] Fix README.md to work better on [PyPi](https://pypi.org/project/PyDocParser/)
+- [X] Fix README.md to work better on [PyPi](https://pypi.org/project/PyDocParser/)
