@@ -46,7 +46,7 @@ class Parser:
         :type parser: str
         :return: The id of the parser
         """
-        parsers = self.parsers(True)
+        parsers = self.get_parsers(True)
         for prsr in parsers:
             if parser in prsr["label"]:
                 return prsr["id"]

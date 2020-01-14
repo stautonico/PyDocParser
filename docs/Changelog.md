@@ -1,6 +1,6 @@
 ## Changelog
 
-### Release V1.1.2 (1/14/20)
+### Release V1.1.2.1 (1/14/20)
 
 ### Added:
 * `uploadbase64()`
