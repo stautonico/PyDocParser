@@ -36,6 +36,10 @@ Parser.**upload(*file*, *parser*)**
 
 This function is used to upload a file to docparser. The `file` argument is the filename to open and send to the parser. (Note: the file must be accessible to the python script that is being executed.) The `parser` argument is the name of the parser to send the data to. After uploading, the function returns the document ID number.
 
+Parser.**uploadbase64(*file_base64*, *parser*, *filename*)***
+
+This function does the same thing as the `Parser.upload()` function, however, this function accepts a file already encoded as **base64**. The `file_base64` argument is the file encoded as base64. he `parser` argument is the name of the parser to send the data to. Since no file object is being passed through, a `filename` must be passed through so the parser has a way of naming the file. After uploading, the function returns the document ID number.
+
 Parser.**upload_id(*file*, *parser_id*)**
 
 This function is used to upload a file to docparser. The `file` argument is the filename to open and send to the parser. (Note: the file must be accessible to the python script that is being executed.) The `parser_id` argument is the id of the parser to send the data to. After uploading, the function returns the document ID number.

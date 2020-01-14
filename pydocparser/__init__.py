@@ -88,6 +88,32 @@ class Parser:
                     parsers.append(item["label"])
                 return parsers
 
+    def uploadbase64(self, file_base64, parser, filename) -> str or None:
+        """
+        Upload a file to docparser (already in base64 format)
+        :param file_base64: The name of the file to upload
+        :type file_base64: str
+        :param parser: The name of the parser to send the file to
+        :type parser: str
+        :param filename: Filename of the file
+        :type filename: str
+        :return: The file id if the upload was successful, otherwise None
+        """
+        payload = {
+            "file_content": file_base64,
+            "file_name": filename
+        }
+
+        parser_id = self.find_parser_id(parser)
+        result = requests.post("https://api.docparser.com/v1/document/upload/{}".format(parser_id),
+                               auth=self.AUTH, data=payload)
+        success = self.check_request(result)
+        if success:
+            result_loaded = loads(result.text)
+            return result_loaded["id"]
+        else:
+            return None
+
     def upload(self, file, parser) -> str or None:
         """
         Upload a file to docparser

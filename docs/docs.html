@@ -1679,6 +1679,14 @@
     </p>
     <p><span>This function is used to upload a file to docparser. The </span><code>file</code><span> argument is the filename to open and send to the parser. (Note: the file must be accessible to the python script that is being executed.) The </span><code>parser</code><span> argument is the name of the parser to send the data to. After uploading, the function returns the document ID number.</span>
     </p>
+
+    <p>
+        <span>Parser.</span><strong><span>uploadbase64(</span><em><span>file_base64</span></em><span>, </span><em><span>parser</span></em>
+        <span>, </span> <em><span>filename</span></em> <span>)</span></strong>
+    </p>
+    <p><span>This function does the same thing as the </span> <code>Parser.upload()</code> <span>function, however, this function accepts a file already encoded as <em>base64</em>. The </span><code>file_base64</code><span> argument is the file encoded as base64. he </span><code>parser</code><span> argument is the name of the parser to send the data to. Since no file object is being passed through, a </span><code>filename</code><span> must be passed through so the parser has a way of naming the file. After uploading, the function returns the document ID number.</span>
+    </p>
+
     <p>
         <span>Parser.</span><strong><span>upload_id(</span><em><span>file</span></em><span>, </span><em><span>parser_id</span></em><span>)</span></strong>
     </p>
