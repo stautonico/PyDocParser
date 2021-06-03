@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>pydocparser API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Package <code>pydocparser</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from datetime import datetime
+from json import loads
+
+import requests
+
+__author__ = &#34;Steve Tautonico&#34;
+__contact__ = &#34;stautonico@gmail.com&#34;
+__date__ = &#34;6/3/2021&#34;
+__version__ = 2.0
+
+from typing import Optional, Union, List, Literal
+
+
+class Parser:
+    &#34;&#34;&#34;
+    Python client for docparser API
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        &#34;&#34;&#34;
+        Constructor for the Parser class
+        &#34;&#34;&#34;
+        self.BASE_URL = &#34;https://api.docparser.com/v1&#34;
+        self.KEY = &#34;&#34;
+        self.AUTH = (self.KEY, &#34;&#34;)
+
+    def login(self, key: str) -&gt; None:
+        &#34;&#34;&#34;
+        Initializes the `self.AUTH` with the user&#39;s API key
+
+        :param key: The user&#39;s API key
+        :type key: str
+        :return: None
+        &#34;&#34;&#34;
+        self.AUTH = (key, &#34;&#34;)
+
+    def ping(self) -&gt; Optional[str]:
+        &#34;&#34;&#34;
+        Try to send an authenticated ping to the docparser API
+
+        :return: &#39;pong&#39; if the connection was successful, else None
+        &#34;&#34;&#34;
+        result = requests.get(self.BASE_URL + &#34;/ping&#34;, auth=self.AUTH)
+
+        success, message = self._check_request(result)
+
+        if success:
+            return loads(result.text)[&#34;msg&#34;]
+
+        return message
+
+    def list_parsers(self) -&gt; Optional[Union[List[dict], str]]:
+        &#34;&#34;&#34;
+        Get a list of all document parsers linked to the given API key
+
+        :return: A list of dicts containing the parser&#39;s id and label if successful, None if failure
+        &#34;&#34;&#34;
+        result = requests.get(self.BASE_URL + &#34;/parsers&#34;, auth=self.AUTH)
+
+        success, message = self._check_request(result)
+
+        if success:
+            return loads(result.text)
+
+        return message
+
+    def list_parser_model_layouts(self, parser_label=None) -&gt; Union[str, list]:
+        &#34;&#34;&#34;
+         List all of the model layouts for a specific parser linked to the given API key
+
+        :param parser_label: The label of the parser to find
+        :return: String error message or list of parser model layouts
+        &#34;&#34;&#34;
+        parser_id = self._find_parser_id(parser_label)
+
+        if not parser_id:
+            return &#34;Unable to find parser&#34;
+
+        result = requests.get(self.BASE_URL + &#34;/parser/models/&#34; + parser_id, auth=self.AUTH)
+
+        success = self._check_request(result)
+
+        if success:
+            return loads(result.text)
+
+        return &#34;Failed to get parser model layouts&#34;
+
+    def upload_file_by_path(self, file_path: str, parser_label: str) -&gt; str:
+        &#34;&#34;&#34;
+        Try to upload a file to the given parser label using a local file path.
+        The http processor (requests) handles sending the file to the server
+
+        :param file_path: The full file path of the file on the local file system
+        :param parser_label: The label of the parser to upload the file to
+        :return: An error message or the id of the uploaded document
+        &#34;&#34;&#34;
+        try:
+            file = open(file_path, &#34;rb&#34;)
+        except FileNotFoundError:
+            return &#34;Failed to read file&#34;
+
+        # Check that the parser exists
+        parser_id = self._find_parser_id(parser_label)
+
+        if not parser_id:
+            return &#34;Unable to find parser&#34;
+
+        result = requests.post(self.BASE_URL + &#34;/document/upload/&#34; + parser_id, auth=self.AUTH, files={&#34;file&#34;: file})
+
+        success, message = self._check_request(result)
+
+        if success:
+            result_loaded = loads(result.text)
+            return result_loaded[&#34;id&#34;]
+
+        return message
+
+    def upload_file_by_base64(self, file_content: bytes, filename: str, parser_label: str) -&gt; str:
+        &#34;&#34;&#34;
+        Try to upload a file to the given parser label using the raw base64 content
+
+        :param file_content: The base64 content of the file to upload
+        :param filename: The name of the file being uploaded
+        :param parser_label: The label of the parser to upload the file to
+        :return: An error message or the id of the uploaded document
+        &#34;&#34;&#34;
+        parser_id = self._find_parser_id(parser_label)
+
+        if not parser_id:
+            return &#34;Unable to find parser&#34;
+
+        payload = {
+            &#34;file_content&#34;: file_content,
+            &#34;file_name&#34;: filename
+        }
+
+        result = requests.post(self.BASE_URL + &#34;/document/upload/&#34; + parser_id, auth=self.AUTH, data=payload)
+
+        success, message = self._check_request(result)
+
+        if success:
+            result_loaded = loads(result.text)
+            return result_loaded[&#34;id&#34;]
+
+        return message
+
+    def upload_file_by_url(self, file_url: str, parser_label: str) -&gt; str:
+        &#34;&#34;&#34;
+        Try to upload a file to the given parser label by fetching a file from an external url
+
+        :param file_url: The url of the file to fetch and send to docparser
+        :param parser_label: The label of the parser to upload the file to
+        :return: An error message or the id of the uploaded document
+        &#34;&#34;&#34;
+        parser_id = self._find_parser_id(parser_label)
+
+        if not parser_id:
+            return &#34;Unable to find parser&#34;
+
+        payload = {
+            &#34;url&#34;: file_url
+        }
+
+        result = requests.post(self.BASE_URL + &#34;/document/fetch/&#34; + parser_id, auth=self.AUTH, data=payload)
+
+        success, message = self._check_request(result)
+
+        if success:
+            result_loaded = loads(result.text)
+            return result_loaded[&#34;id&#34;]
+
+        return message
+
+    def get_one_result(self, parser_label: str, document_id: str) -&gt; Union[str, dict]:
+        &#34;&#34;&#34;
+        Get a specific document result from the given parser by document_id
+
+        :param parser_label: The label of the parser to retrieve the document result from
+        :param document_id: The id of the document to receive
+        :return: A string error message or a dict containing the document result
+        &#34;&#34;&#34;
+        parser_id = self._find_parser_id(parser_label)
+
+        if not parser_id:
+            return &#34;Unable to find parser&#34;
+
+        result = requests.get(self.BASE_URL + &#34;/results/{}/{}&#34;.format(parser_id, document_id), auth=self.AUTH)
+
+        # This needs its own error checking because status 400 isn&#39;t always a bad thing
+        if result.status_code == 403:
+            return &#34;Invalid API key, use Parser.login(api_key)&#34;
+        else:
+            return loads(result.text)
+
+    def get_multiple_results(self, parser_label: str, format: Literal[&#34;object&#34;, &#34;flat&#34;] = &#34;object&#34;,
+                             list: Literal[&#34;last_uploaded&#34;, &#34;uploaded_after&#34;, &#34; processed_after&#34;] = &#34;last_uploaded&#34;,
+                             limit: int = 100, date: Optional[datetime] = None, remote_id: Optional[str] = None,
+                             include_processing_queue: Optional[bool] = None) -&gt; Union[str, dict]:
+        &#34;&#34;&#34;
+        Get multiple document results based on the given set of rules from the docparser API docs:
+        https://dev.docparser.com/?shell#get-data-of-one-document
+
+        :param parser_label: The label of the parser to retrieve the document result from
+        :param format:
+        :param list:
+        :param limit:
+        :param date:
+        :param remote_id:
+        :param include_processing_queue:
+        :return: A string error message or a dict containing the document result
+        &#34;&#34;&#34;
+        parser_id = self._find_parser_id(parser_label)
+
+        if not parser_id:
+            return &#34;Unable to find parser&#34;
+
+        payload = {
+            format: format,
+            list: list,
+            limit: limit
+        }
+
+        if date:
+            payload[&#34;date&#34;] = date.isoformat()
+
+        if remote_id:
+            payload[&#34;remote_id&#34;] = remote_id
+
+        if include_processing_queue:
+            payload[&#34;include_processing_queue&#34;] = include_processing_queue
+
+        result = requests.get(self.BASE_URL + &#34;/results/&#34; + parser_id, auth=self.AUTH, data=payload)
+
+        # This needs its own error checking because status 400 isn&#39;t always a bad thing
+        if result.status_code == 403:
+            return &#34;Invalid API key, use Parser.login(api_key)&#34;
+        else:
+            return loads(result.text)
+
+    ## Internal functions ##
+
+    def _find_parser_id(self, parser_label) -&gt; Optional[str]:
+        &#34;&#34;&#34;
+        Finds the id of the parser based on the label
+
+        :param parser_label: The name of the parser
+        :type parser_label: str
+        :return: The id of the parser
+        &#34;&#34;&#34;
+        parsers = self.list_parsers()
+
+        for p in parsers:
+            if p[&#34;label&#34;] == parser_label:
+                return p[&#34;id&#34;]
+
+        return None
+
+    @staticmethod
+    def _check_request(request) -&gt; (bool, str):
+        &#34;&#34;&#34;
+        Checks the status of a request to see if any errors have occurred.
+        Used to prevent having to manually check each status code on each endpoint
+
+        :param request: The result of the request
+        :type request: requests.models.Response
+        :return: `True` and an empty string if successful, `False` and an error message if failure
+        &#34;&#34;&#34;
+        if request.status_code == 403:
+            return False, &#34;Invalid API key, use Parser.login(&lt;YOUR API KEY&gt;)&#34;
+        elif request.status_code == 400:
+            return False, &#34;Error 400, bad request&#34;
+        else:
+            return True, &#34;&#34;</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="pydocparser.Parser"><code class="flex name class">
+<span>class <span class="ident">Parser</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Python client for docparser API</p>
+<p>Constructor for the Parser class</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Parser:
+    &#34;&#34;&#34;
+    Python client for docparser API
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        &#34;&#34;&#34;
+        Constructor for the Parser class
+        &#34;&#34;&#34;
+        self.BASE_URL = &#34;https://api.docparser.com/v1&#34;
+        self.KEY = &#34;&#34;
+        self.AUTH = (self.KEY, &#34;&#34;)
+
+    def login(self, key: str) -&gt; None:
+        &#34;&#34;&#34;
+        Initializes the `self.AUTH` with the user&#39;s API key
+
+        :param key: The user&#39;s API key
+        :type key: str
+        :return: None
+        &#34;&#34;&#34;
+        self.AUTH = (key, &#34;&#34;)
+
+    def ping(self) -&gt; Optional[str]:
+        &#34;&#34;&#34;
+        Try to send an authenticated ping to the docparser API
+
+        :return: &#39;pong&#39; if the connection was successful, else None
+        &#34;&#34;&#34;
+        result = requests.get(self.BASE_URL + &#34;/ping&#34;, auth=self.AUTH)
+
+        success, message = self._check_request(result)
+
+        if success:
+            return loads(result.text)[&#34;msg&#34;]
+
+        return message
+
+    def list_parsers(self) -&gt; Optional[Union[List[dict], str]]:
+        &#34;&#34;&#34;
+        Get a list of all document parsers linked to the given API key
+
+        :return: A list of dicts containing the parser&#39;s id and label if successful, None if failure
+        &#34;&#34;&#34;
+        result = requests.get(self.BASE_URL + &#34;/parsers&#34;, auth=self.AUTH)
+
+        success, message = self._check_request(result)
+
+        if success:
+            return loads(result.text)
+
+        return message
+
+    def list_parser_model_layouts(self, parser_label=None) -&gt; Union[str, list]:
+        &#34;&#34;&#34;
+         List all of the model layouts for a specific parser linked to the given API key
+
+        :param parser_label: The label of the parser to find
+        :return: String error message or list of parser model layouts
+        &#34;&#34;&#34;
+        parser_id = self._find_parser_id(parser_label)
+
+        if not parser_id:
+            return &#34;Unable to find parser&#34;
+
+        result = requests.get(self.BASE_URL + &#34;/parser/models/&#34; + parser_id, auth=self.AUTH)
+
+        success = self._check_request(result)
+
+        if success:
+            return loads(result.text)
+
+        return &#34;Failed to get parser model layouts&#34;
+
+    def upload_file_by_path(self, file_path: str, parser_label: str) -&gt; str:
+        &#34;&#34;&#34;
+        Try to upload a file to the given parser label using a local file path.
+        The http processor (requests) handles sending the file to the server
+
+        :param file_path: The full file path of the file on the local file system
+        :param parser_label: The label of the parser to upload the file to
+        :return: An error message or the id of the uploaded document
+        &#34;&#34;&#34;
+        try:
+            file = open(file_path, &#34;rb&#34;)
+        except FileNotFoundError:
+            return &#34;Failed to read file&#34;
+
+        # Check that the parser exists
+        parser_id = self._find_parser_id(parser_label)
+
+        if not parser_id:
+            return &#34;Unable to find parser&#34;
+
+        result = requests.post(self.BASE_URL + &#34;/document/upload/&#34; + parser_id, auth=self.AUTH, files={&#34;file&#34;: file})
+
+        success, message = self._check_request(result)
+
+        if success:
+            result_loaded = loads(result.text)
+            return result_loaded[&#34;id&#34;]
+
+        return message
+
+    def upload_file_by_base64(self, file_content: bytes, filename: str, parser_label: str) -&gt; str:
+        &#34;&#34;&#34;
+        Try to upload a file to the given parser label using the raw base64 content
+
+        :param file_content: The base64 content of the file to upload
+        :param filename: The name of the file being uploaded
+        :param parser_label: The label of the parser to upload the file to
+        :return: An error message or the id of the uploaded document
+        &#34;&#34;&#34;
+        parser_id = self._find_parser_id(parser_label)
+
+        if not parser_id:
+            return &#34;Unable to find parser&#34;
+
+        payload = {
+            &#34;file_content&#34;: file_content,
+            &#34;file_name&#34;: filename
+        }
+
+        result = requests.post(self.BASE_URL + &#34;/document/upload/&#34; + parser_id, auth=self.AUTH, data=payload)
+
+        success, message = self._check_request(result)
+
+        if success:
+            result_loaded = loads(result.text)
+            return result_loaded[&#34;id&#34;]
+
+        return message
+
+    def upload_file_by_url(self, file_url: str, parser_label: str) -&gt; str:
+        &#34;&#34;&#34;
+        Try to upload a file to the given parser label by fetching a file from an external url
+
+        :param file_url: The url of the file to fetch and send to docparser
+        :param parser_label: The label of the parser to upload the file to
+        :return: An error message or the id of the uploaded document
+        &#34;&#34;&#34;
+        parser_id = self._find_parser_id(parser_label)
+
+        if not parser_id:
+            return &#34;Unable to find parser&#34;
+
+        payload = {
+            &#34;url&#34;: file_url
+        }
+
+        result = requests.post(self.BASE_URL + &#34;/document/fetch/&#34; + parser_id, auth=self.AUTH, data=payload)
+
+        success, message = self._check_request(result)
+
+        if success:
+            result_loaded = loads(result.text)
+            return result_loaded[&#34;id&#34;]
+
+        return message
+
+    def get_one_result(self, parser_label: str, document_id: str) -&gt; Union[str, dict]:
+        &#34;&#34;&#34;
+        Get a specific document result from the given parser by document_id
+
+        :param parser_label: The label of the parser to retrieve the document result from
+        :param document_id: The id of the document to receive
+        :return: A string error message or a dict containing the document result
+        &#34;&#34;&#34;
+        parser_id = self._find_parser_id(parser_label)
+
+        if not parser_id:
+            return &#34;Unable to find parser&#34;
+
+        result = requests.get(self.BASE_URL + &#34;/results/{}/{}&#34;.format(parser_id, document_id), auth=self.AUTH)
+
+        # This needs its own error checking because status 400 isn&#39;t always a bad thing
+        if result.status_code == 403:
+            return &#34;Invalid API key, use Parser.login(api_key)&#34;
+        else:
+            return loads(result.text)
+
+    def get_multiple_results(self, parser_label: str, format: Literal[&#34;object&#34;, &#34;flat&#34;] = &#34;object&#34;,
+                             list: Literal[&#34;last_uploaded&#34;, &#34;uploaded_after&#34;, &#34; processed_after&#34;] = &#34;last_uploaded&#34;,
+                             limit: int = 100, date: Optional[datetime] = None, remote_id: Optional[str] = None,
+                             include_processing_queue: Optional[bool] = None) -&gt; Union[str, dict]:
+        &#34;&#34;&#34;
+        Get multiple document results based on the given set of rules from the docparser API docs:
+        https://dev.docparser.com/?shell#get-data-of-one-document
+
+        :param parser_label: The label of the parser to retrieve the document result from
+        :param format:
+        :param list:
+        :param limit:
+        :param date:
+        :param remote_id:
+        :param include_processing_queue:
+        :return: A string error message or a dict containing the document result
+        &#34;&#34;&#34;
+        parser_id = self._find_parser_id(parser_label)
+
+        if not parser_id:
+            return &#34;Unable to find parser&#34;
+
+        payload = {
+            format: format,
+            list: list,
+            limit: limit
+        }
+
+        if date:
+            payload[&#34;date&#34;] = date.isoformat()
+
+        if remote_id:
+            payload[&#34;remote_id&#34;] = remote_id
+
+        if include_processing_queue:
+            payload[&#34;include_processing_queue&#34;] = include_processing_queue
+
+        result = requests.get(self.BASE_URL + &#34;/results/&#34; + parser_id, auth=self.AUTH, data=payload)
+
+        # This needs its own error checking because status 400 isn&#39;t always a bad thing
+        if result.status_code == 403:
+            return &#34;Invalid API key, use Parser.login(api_key)&#34;
+        else:
+            return loads(result.text)
+
+    ## Internal functions ##
+
+    def _find_parser_id(self, parser_label) -&gt; Optional[str]:
+        &#34;&#34;&#34;
+        Finds the id of the parser based on the label
+
+        :param parser_label: The name of the parser
+        :type parser_label: str
+        :return: The id of the parser
+        &#34;&#34;&#34;
+        parsers = self.list_parsers()
+
+        for p in parsers:
+            if p[&#34;label&#34;] == parser_label:
+                return p[&#34;id&#34;]
+
+        return None
+
+    @staticmethod
+    def _check_request(request) -&gt; (bool, str):
+        &#34;&#34;&#34;
+        Checks the status of a request to see if any errors have occurred.
+        Used to prevent having to manually check each status code on each endpoint
+
+        :param request: The result of the request
+        :type request: requests.models.Response
+        :return: `True` and an empty string if successful, `False` and an error message if failure
+        &#34;&#34;&#34;
+        if request.status_code == 403:
+            return False, &#34;Invalid API key, use Parser.login(&lt;YOUR API KEY&gt;)&#34;
+        elif request.status_code == 400:
+            return False, &#34;Error 400, bad request&#34;
+        else:
+            return True, &#34;&#34;</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="pydocparser.Parser.get_multiple_results"><code class="name flex">
+<span>def <span class="ident">get_multiple_results</span></span>(<span>self, parser_label: str, format: Literal['object', 'flat'] = 'object', list: Literal['last_uploaded', 'uploaded_after', ' processed_after'] = 'last_uploaded', limit: int = 100, date: Optional[datetime.datetime] = None, remote_id: Optional[str] = None, include_processing_queue: Optional[bool] = None) ‑> Union[str, dict]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get multiple document results based on the given set of rules from the docparser API docs:
+<a href="https://dev.docparser.com/?shell#get-data-of-one-document">https://dev.docparser.com/?shell#get-data-of-one-document</a></p>
+<p>:param parser_label: The label of the parser to retrieve the document result from
+:param format:
+:param list:
+:param limit:
+:param date:
+:param remote_id:
+:param include_processing_queue:
+:return: A string error message or a dict containing the document result</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_multiple_results(self, parser_label: str, format: Literal[&#34;object&#34;, &#34;flat&#34;] = &#34;object&#34;,
+                         list: Literal[&#34;last_uploaded&#34;, &#34;uploaded_after&#34;, &#34; processed_after&#34;] = &#34;last_uploaded&#34;,
+                         limit: int = 100, date: Optional[datetime] = None, remote_id: Optional[str] = None,
+                         include_processing_queue: Optional[bool] = None) -&gt; Union[str, dict]:
+    &#34;&#34;&#34;
+    Get multiple document results based on the given set of rules from the docparser API docs:
+    https://dev.docparser.com/?shell#get-data-of-one-document
+
+    :param parser_label: The label of the parser to retrieve the document result from
+    :param format:
+    :param list:
+    :param limit:
+    :param date:
+    :param remote_id:
+    :param include_processing_queue:
+    :return: A string error message or a dict containing the document result
+    &#34;&#34;&#34;
+    parser_id = self._find_parser_id(parser_label)
+
+    if not parser_id:
+        return &#34;Unable to find parser&#34;
+
+    payload = {
+        format: format,
+        list: list,
+        limit: limit
+    }
+
+    if date:
+        payload[&#34;date&#34;] = date.isoformat()
+
+    if remote_id:
+        payload[&#34;remote_id&#34;] = remote_id
+
+    if include_processing_queue:
+        payload[&#34;include_processing_queue&#34;] = include_processing_queue
+
+    result = requests.get(self.BASE_URL + &#34;/results/&#34; + parser_id, auth=self.AUTH, data=payload)
+
+    # This needs its own error checking because status 400 isn&#39;t always a bad thing
+    if result.status_code == 403:
+        return &#34;Invalid API key, use Parser.login(api_key)&#34;
+    else:
+        return loads(result.text)</code></pre>
+</details>
+</dd>
+<dt id="pydocparser.Parser.get_one_result"><code class="name flex">
+<span>def <span class="ident">get_one_result</span></span>(<span>self, parser_label: str, document_id: str) ‑> Union[str, dict]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get a specific document result from the given parser by document_id</p>
+<p>:param parser_label: The label of the parser to retrieve the document result from
+:param document_id: The id of the document to receive
+:return: A string error message or a dict containing the document result</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_one_result(self, parser_label: str, document_id: str) -&gt; Union[str, dict]:
+    &#34;&#34;&#34;
+    Get a specific document result from the given parser by document_id
+
+    :param parser_label: The label of the parser to retrieve the document result from
+    :param document_id: The id of the document to receive
+    :return: A string error message or a dict containing the document result
+    &#34;&#34;&#34;
+    parser_id = self._find_parser_id(parser_label)
+
+    if not parser_id:
+        return &#34;Unable to find parser&#34;
+
+    result = requests.get(self.BASE_URL + &#34;/results/{}/{}&#34;.format(parser_id, document_id), auth=self.AUTH)
+
+    # This needs its own error checking because status 400 isn&#39;t always a bad thing
+    if result.status_code == 403:
+        return &#34;Invalid API key, use Parser.login(api_key)&#34;
+    else:
+        return loads(result.text)</code></pre>
+</details>
+</dd>
+<dt id="pydocparser.Parser.list_parser_model_layouts"><code class="name flex">
+<span>def <span class="ident">list_parser_model_layouts</span></span>(<span>self, parser_label=None) ‑> Union[str, list]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>List all of the model layouts for a specific parser linked to the given API key</p>
+<p>:param parser_label: The label of the parser to find
+:return: String error message or list of parser model layouts</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_parser_model_layouts(self, parser_label=None) -&gt; Union[str, list]:
+    &#34;&#34;&#34;
+     List all of the model layouts for a specific parser linked to the given API key
+
+    :param parser_label: The label of the parser to find
+    :return: String error message or list of parser model layouts
+    &#34;&#34;&#34;
+    parser_id = self._find_parser_id(parser_label)
+
+    if not parser_id:
+        return &#34;Unable to find parser&#34;
+
+    result = requests.get(self.BASE_URL + &#34;/parser/models/&#34; + parser_id, auth=self.AUTH)
+
+    success = self._check_request(result)
+
+    if success:
+        return loads(result.text)
+
+    return &#34;Failed to get parser model layouts&#34;</code></pre>
+</details>
+</dd>
+<dt id="pydocparser.Parser.list_parsers"><code class="name flex">
+<span>def <span class="ident">list_parsers</span></span>(<span>self) ‑> Union[List[dict], str, NoneType]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get a list of all document parsers linked to the given API key</p>
+<p>:return: A list of dicts containing the parser's id and label if successful, None if failure</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_parsers(self) -&gt; Optional[Union[List[dict], str]]:
+    &#34;&#34;&#34;
+    Get a list of all document parsers linked to the given API key
+
+    :return: A list of dicts containing the parser&#39;s id and label if successful, None if failure
+    &#34;&#34;&#34;
+    result = requests.get(self.BASE_URL + &#34;/parsers&#34;, auth=self.AUTH)
+
+    success, message = self._check_request(result)
+
+    if success:
+        return loads(result.text)
+
+    return message</code></pre>
+</details>
+</dd>
+<dt id="pydocparser.Parser.login"><code class="name flex">
+<span>def <span class="ident">login</span></span>(<span>self, key: str) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Initializes the <code>self.AUTH</code> with the user's API key</p>
+<p>:param key: The user's API key
+:type key: str
+:return: None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def login(self, key: str) -&gt; None:
+    &#34;&#34;&#34;
+    Initializes the `self.AUTH` with the user&#39;s API key
+
+    :param key: The user&#39;s API key
+    :type key: str
+    :return: None
+    &#34;&#34;&#34;
+    self.AUTH = (key, &#34;&#34;)</code></pre>
+</details>
+</dd>
+<dt id="pydocparser.Parser.ping"><code class="name flex">
+<span>def <span class="ident">ping</span></span>(<span>self) ‑> Optional[str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Try to send an authenticated ping to the docparser API</p>
+<p>:return: 'pong' if the connection was successful, else None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ping(self) -&gt; Optional[str]:
+    &#34;&#34;&#34;
+    Try to send an authenticated ping to the docparser API
+
+    :return: &#39;pong&#39; if the connection was successful, else None
+    &#34;&#34;&#34;
+    result = requests.get(self.BASE_URL + &#34;/ping&#34;, auth=self.AUTH)
+
+    success, message = self._check_request(result)
+
+    if success:
+        return loads(result.text)[&#34;msg&#34;]
+
+    return message</code></pre>
+</details>
+</dd>
+<dt id="pydocparser.Parser.upload_file_by_base64"><code class="name flex">
+<span>def <span class="ident">upload_file_by_base64</span></span>(<span>self, file_content: bytes, filename: str, parser_label: str) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Try to upload a file to the given parser label using the raw base64 content</p>
+<p>:param file_content: The base64 content of the file to upload
+:param filename: The name of the file being uploaded
+:param parser_label: The label of the parser to upload the file to
+:return: An error message or the id of the uploaded document</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def upload_file_by_base64(self, file_content: bytes, filename: str, parser_label: str) -&gt; str:
+    &#34;&#34;&#34;
+    Try to upload a file to the given parser label using the raw base64 content
+
+    :param file_content: The base64 content of the file to upload
+    :param filename: The name of the file being uploaded
+    :param parser_label: The label of the parser to upload the file to
+    :return: An error message or the id of the uploaded document
+    &#34;&#34;&#34;
+    parser_id = self._find_parser_id(parser_label)
+
+    if not parser_id:
+        return &#34;Unable to find parser&#34;
+
+    payload = {
+        &#34;file_content&#34;: file_content,
+        &#34;file_name&#34;: filename
+    }
+
+    result = requests.post(self.BASE_URL + &#34;/document/upload/&#34; + parser_id, auth=self.AUTH, data=payload)
+
+    success, message = self._check_request(result)
+
+    if success:
+        result_loaded = loads(result.text)
+        return result_loaded[&#34;id&#34;]
+
+    return message</code></pre>
+</details>
+</dd>
+<dt id="pydocparser.Parser.upload_file_by_path"><code class="name flex">
+<span>def <span class="ident">upload_file_by_path</span></span>(<span>self, file_path: str, parser_label: str) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Try to upload a file to the given parser label using a local file path.
+The http processor (requests) handles sending the file to the server</p>
+<p>:param file_path: The full file path of the file on the local file system
+:param parser_label: The label of the parser to upload the file to
+:return: An error message or the id of the uploaded document</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def upload_file_by_path(self, file_path: str, parser_label: str) -&gt; str:
+    &#34;&#34;&#34;
+    Try to upload a file to the given parser label using a local file path.
+    The http processor (requests) handles sending the file to the server
+
+    :param file_path: The full file path of the file on the local file system
+    :param parser_label: The label of the parser to upload the file to
+    :return: An error message or the id of the uploaded document
+    &#34;&#34;&#34;
+    try:
+        file = open(file_path, &#34;rb&#34;)
+    except FileNotFoundError:
+        return &#34;Failed to read file&#34;
+
+    # Check that the parser exists
+    parser_id = self._find_parser_id(parser_label)
+
+    if not parser_id:
+        return &#34;Unable to find parser&#34;
+
+    result = requests.post(self.BASE_URL + &#34;/document/upload/&#34; + parser_id, auth=self.AUTH, files={&#34;file&#34;: file})
+
+    success, message = self._check_request(result)
+
+    if success:
+        result_loaded = loads(result.text)
+        return result_loaded[&#34;id&#34;]
+
+    return message</code></pre>
+</details>
+</dd>
+<dt id="pydocparser.Parser.upload_file_by_url"><code class="name flex">
+<span>def <span class="ident">upload_file_by_url</span></span>(<span>self, file_url: str, parser_label: str) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Try to upload a file to the given parser label by fetching a file from an external url</p>
+<p>:param file_url: The url of the file to fetch and send to docparser
+:param parser_label: The label of the parser to upload the file to
+:return: An error message or the id of the uploaded document</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def upload_file_by_url(self, file_url: str, parser_label: str) -&gt; str:
+    &#34;&#34;&#34;
+    Try to upload a file to the given parser label by fetching a file from an external url
+
+    :param file_url: The url of the file to fetch and send to docparser
+    :param parser_label: The label of the parser to upload the file to
+    :return: An error message or the id of the uploaded document
+    &#34;&#34;&#34;
+    parser_id = self._find_parser_id(parser_label)
+
+    if not parser_id:
+        return &#34;Unable to find parser&#34;
+
+    payload = {
+        &#34;url&#34;: file_url
+    }
+
+    result = requests.post(self.BASE_URL + &#34;/document/fetch/&#34; + parser_id, auth=self.AUTH, data=payload)
+
+    success, message = self._check_request(result)
+
+    if success:
+        result_loaded = loads(result.text)
+        return result_loaded[&#34;id&#34;]
+
+    return message</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="pydocparser.Parser" href="#pydocparser.Parser">Parser</a></code></h4>
+<ul class="">
+<li><code><a title="pydocparser.Parser.get_multiple_results" href="#pydocparser.Parser.get_multiple_results">get_multiple_results</a></code></li>
+<li><code><a title="pydocparser.Parser.get_one_result" href="#pydocparser.Parser.get_one_result">get_one_result</a></code></li>
+<li><code><a title="pydocparser.Parser.list_parser_model_layouts" href="#pydocparser.Parser.list_parser_model_layouts">list_parser_model_layouts</a></code></li>
+<li><code><a title="pydocparser.Parser.list_parsers" href="#pydocparser.Parser.list_parsers">list_parsers</a></code></li>
+<li><code><a title="pydocparser.Parser.login" href="#pydocparser.Parser.login">login</a></code></li>
+<li><code><a title="pydocparser.Parser.ping" href="#pydocparser.Parser.ping">ping</a></code></li>
+<li><code><a title="pydocparser.Parser.upload_file_by_base64" href="#pydocparser.Parser.upload_file_by_base64">upload_file_by_base64</a></code></li>
+<li><code><a title="pydocparser.Parser.upload_file_by_path" href="#pydocparser.Parser.upload_file_by_path">upload_file_by_path</a></code></li>
+<li><code><a title="pydocparser.Parser.upload_file_by_url" href="#pydocparser.Parser.upload_file_by_url">upload_file_by_url</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
