@@ -23,6 +23,8 @@ jobs:
           pip install -r requirements.txt
           pdoc --html --output-dir docs -c show_source_code=True -c show_type_annotations=True pydocparser --force
           cp docs/ website/ -r
+          cd website/
+          mv pydocparser/ docs/
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:

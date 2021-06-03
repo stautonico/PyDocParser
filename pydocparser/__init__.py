@@ -5,7 +5,7 @@ import requests
 
 __author__ = "Steve Tautonico"
 __contact__ = "stautonico@gmail.com"
-__date__ = "2/6/2021"
+__date__ = "6/3/2021"
 __version__ = 2.0
 
 from typing import Optional, Union, List, Literal

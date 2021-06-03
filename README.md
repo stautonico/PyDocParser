@@ -12,7 +12,7 @@
 * [License](#License)
 * [Changelog](#Changelog)
 * [To-Do](#To-Do)
-* [Documentation](https://github.com/tman540/PyDocParser/blob/master/docs/PyDocParser%20Documentation.md)
+* [Documentation](https://docparser.tautonico.tech/docs)
 
 <br>
 
@@ -75,7 +75,7 @@ If `parser.ping()` returns ‘pong’, then you have a successful connection to 
 You can get a list of current parsers like this:
 
 ```python
-parsers = parser.get_parsers()
+parsers = parser.list_parsers()
 ```
 
 This will return a list of the names of all available parsers.
@@ -83,13 +83,14 @@ This will return a list of the names of all available parsers.
 To upload a file to docparser, you can use the `upload` function:
 
 ```python
-id = parser.upload("fileone.pdf", "PDF Parser") #ars: file to upload, the name of the parser
+id = parser.upload_file_by_path("fileone.pdf", "PDF Parser") #args: file to upload, the name of the parser
+# Note that "fileone.pdf" was in the current working directory
 ```
 
 The function will return the document ID of the file that was just uploaded. To retrieve the parsed data, you can call the `fetch` function:
 
 ```python
-data = parser.fetch("PDF Parser", id) # The id is the doc id that was returned by `parser.upload()`
+data = parser.get_one_result("PDF Parser", id) # The id is the doc id that was returned by `parser.upload()`
 ```
 
 `fetch` returns all the parsed data from the file you selected
@@ -113,10 +114,11 @@ This library is available as open source un the [MIT License](https://github.com
 V1.0 (7/11/19) Initial release
 
 [V1.1 (7/12/19) Bug Fixes + New Functions](https://docparser.tautonico.tech/changelog)
-<br>
+
+[V2.0 (6/3/21) Full Re-write](https://docparser.tautonico.tech/changelog)
 
 #### To-Do
 
-- [ ] Change function names to more closely resemble those in the PHP/Node/AJAX clients
+- [X] Change function names to more closely resemble those in the PHP/Node/AJAX clients
 - [x] Update setup.py to include install requirements
 - [X] Fix README.md to work better on [PyPi](https://pypi.org/project/PyDocParser/)
