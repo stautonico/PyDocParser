@@ -35,7 +35,7 @@ class Parser:
         """
         self.AUTH = (key, "")
         assert self.ping() == "pong"
-        self._populate_parser_map(self.list_parsers())
+        self._populate_parser_dict(self.list_parsers())
 
     def ping(self) -> Optional[str]:
         """
@@ -256,7 +256,7 @@ class Parser:
 
     # Internal functions #
 
-    def _populate_parser_map(self, parsers: list[dict]):
+    def _populate_parser_dict(self, parsers: list[dict]):
         for parser in parsers:
             self.PARSER_DICT[parser["label"]] = parser["id"]
 
@@ -271,7 +271,7 @@ class Parser:
         parser_id = self.PARSER_DICT[parser_label]
 
         if not parser_id:
-            self._populate_parser_map(self.list_parsers())
+            self._populate_parser_dict(self.list_parsers())
             return self.PARSER_DICT[parser_label]
         else:
             return parser_id
