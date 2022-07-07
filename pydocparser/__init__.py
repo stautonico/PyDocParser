@@ -171,7 +171,7 @@ class Parser:
 
         return message
 
-    def get_one_result(self, parser_label: str, document_id: str) -> Union[str, dict]:
+    def get_one_result(self, parser_label: str, document_id: str, include_children: Optional[boolean]=False) -> Union[str, dict]:
         """
         Get a specific document result from the given parser by document_id
 
@@ -184,7 +184,10 @@ class Parser:
         if not parser_id:
             return "Unable to find parser"
 
-        result = requests.get(self.BASE_URL + "/results/{}/{}".format(parser_id, document_id), auth=self.AUTH)
+        if include_children:
+            result = requests.get(self.BASE_URL + "/results/{}/{}/?include_children=true/".format(parser_id, document_id), auth=self.AUTH)
+        else:
+            result = requests.get(self.BASE_URL + "/results/{}/{}".format(parser_id, document_id), auth=self.AUTH)
 
         # This needs its own error checking because status 400 isn't always a bad thing
         if result.status_code == 403:
