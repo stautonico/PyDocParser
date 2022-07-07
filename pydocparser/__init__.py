@@ -8,7 +8,11 @@ __contact__ = "stautonico@gmail.com"
 __date__ = "6/3/2021"
 __version__ = 2.0
 
-from typing import Optional, Union, List, Literal
+try:
+    from typing import Literal
+except:
+    from typing_extensions import Literal
+from typing import Optional, Union, List
 
 
 class Parser:
