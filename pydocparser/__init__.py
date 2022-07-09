@@ -192,7 +192,7 @@ class Parser:
 
         return message
 
-    def get_one_result(self, parser_label: str, document_id: str, include_children: Optional[boolean]=False) -> Union[str, dict]:
+    def get_one_result(self, parser_label: str, document_id: str, include_children: Optional[bool]=False) -> Union[str, dict]:
         """
         Get a specific document result from the given parser by document_id
 
