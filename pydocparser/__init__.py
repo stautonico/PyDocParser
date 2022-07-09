@@ -5,8 +5,8 @@ import requests
 
 __author__ = "Steve Tautonico"
 __contact__ = "stautonico@gmail.com"
-__date__ = "6/3/2021"
-__version__ = 2.0
+__date__ = "7/7/2022"
+__version__ = 2.1
 
 from typing import Optional, Union, List, Literal
 
@@ -23,6 +23,7 @@ class Parser:
         self.BASE_URL = "https://api.docparser.com/v1"
         self.KEY = ""
         self.AUTH = (self.KEY, "")
+        self.PARSER_DICT = {}
 
     def login(self, key: str) -> None:
         """
@@ -33,6 +34,8 @@ class Parser:
         :return: None
         """
         self.AUTH = (key, "")
+        assert self.ping() == "pong"
+        self._populate_parser_dict(self.list_parsers())
 
     def ping(self) -> Optional[str]:
         """
@@ -85,13 +88,14 @@ class Parser:
 
         return "Failed to get parser model layouts"
 
-    def upload_file_by_path(self, file_path: str, parser_label: str) -> str:
+    def upload_file_by_path(self, file_path: str, parser_label: str, remote_id: str) -> str:
         """
         Try to upload a file to the given parser label using a local file path.
         The http processor (requests) handles sending the file to the server
 
         :param file_path: The full file path of the file on the local file system
         :param parser_label: The label of the parser to upload the file to
+        :param remote_id: Association id for after the document has been parsed
         :return: An error message or the id of the uploaded document
         """
         try:
@@ -105,7 +109,16 @@ class Parser:
         if not parser_id:
             return "Unable to find parser"
 
-        result = requests.post(self.BASE_URL + "/document/upload/" + parser_id, auth=self.AUTH, files={"file": file})
+        payload = {
+            "remote_id": remote_id
+        }
+
+        result = requests.post(
+            self.BASE_URL + "/document/upload/" + parser_id,
+            auth=self.AUTH,
+            files={"file": file},
+            data=payload
+        )
 
         success, message = self._check_request(result)
 
@@ -115,13 +128,14 @@ class Parser:
 
         return message
 
-    def upload_file_by_base64(self, file_content: bytes, filename: str, parser_label: str) -> str:
+    def upload_file_by_base64(self, file_content: bytes, filename: str, parser_label: str, remote_id: str) -> str:
         """
         Try to upload a file to the given parser label using the raw base64 content
 
         :param file_content: The base64 content of the file to upload
         :param filename: The name of the file being uploaded
         :param parser_label: The label of the parser to upload the file to
+        :param remote_id: Association id for after the document has been parsed
         :return: An error message or the id of the uploaded document
         """
         parser_id = self._find_parser_id(parser_label)
@@ -131,7 +145,8 @@ class Parser:
 
         payload = {
             "file_content": file_content,
-            "file_name": filename
+            "file_name": filename,
+            "remote_id": remote_id
         }
 
         result = requests.post(self.BASE_URL + "/document/upload/" + parser_id, auth=self.AUTH, data=payload)
@@ -144,12 +159,13 @@ class Parser:
 
         return message
 
-    def upload_file_by_url(self, file_url: str, parser_label: str) -> str:
+    def upload_file_by_url(self, file_url: str, parser_label: str, remote_id: str) -> str:
         """
         Try to upload a file to the given parser label by fetching a file from an external url
 
         :param file_url: The url of the file to fetch and send to docparser
         :param parser_label: The label of the parser to upload the file to
+        :param remote_id: Association id for after the document has been parsed
         :return: An error message or the id of the uploaded document
         """
         parser_id = self._find_parser_id(parser_label)
@@ -158,7 +174,8 @@ class Parser:
             return "Unable to find parser"
 
         payload = {
-            "url": file_url
+            "url": file_url,
+            "remote_id": remote_id
         }
 
         result = requests.post(self.BASE_URL + "/document/fetch/" + parser_id, auth=self.AUTH, data=payload)
@@ -237,7 +254,11 @@ class Parser:
         else:
             return loads(result.text)
 
-    ## Internal functions ##
+    # Internal functions #
+
+    def _populate_parser_dict(self, parsers: list[dict]):
+        for parser in parsers:
+            self.PARSER_DICT[parser["label"]] = parser["id"]
 
     def _find_parser_id(self, parser_label) -> Optional[str]:
         """
@@ -247,13 +268,13 @@ class Parser:
         :type parser_label: str
         :return: The id of the parser
         """
-        parsers = self.list_parsers()
+        parser_id = self.PARSER_DICT[parser_label]
 
-        for p in parsers:
-            if p["label"] == parser_label:
-                return p["id"]
-
-        return None
+        if not parser_id:
+            self._populate_parser_dict(self.list_parsers())
+            return self.PARSER_DICT[parser_label]
+        else:
+            return parser_id
 
     @staticmethod
     def _check_request(request) -> (bool, str):
