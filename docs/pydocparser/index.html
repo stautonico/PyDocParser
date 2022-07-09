@@ -36,7 +36,11 @@ __contact__ = &#34;stautonico@gmail.com&#34;
 __date__ = &#34;7/7/2022&#34;
 __version__ = 2.1
 
-from typing import Optional, Union, List, Literal
+try:
+    from typing import Literal
+except:
+    from typing_extensions import Literal
+from typing import Optional, Union, List
 
 
 class Parser:
@@ -216,7 +220,7 @@ class Parser:
 
         return message
 
-    def get_one_result(self, parser_label: str, document_id: str) -&gt; Union[str, dict]:
+    def get_one_result(self, parser_label: str, document_id: str, include_children: Optional[bool]=False) -&gt; Union[str, dict]:
         &#34;&#34;&#34;
         Get a specific document result from the given parser by document_id
 
@@ -229,7 +233,10 @@ class Parser:
         if not parser_id:
             return &#34;Unable to find parser&#34;
 
-        result = requests.get(self.BASE_URL + &#34;/results/{}/{}&#34;.format(parser_id, document_id), auth=self.AUTH)
+        if include_children:
+            result = requests.get(self.BASE_URL + &#34;/results/{}/{}/?include_children=true/&#34;.format(parser_id, document_id), auth=self.AUTH)
+        else:
+            result = requests.get(self.BASE_URL + &#34;/results/{}/{}&#34;.format(parser_id, document_id), auth=self.AUTH)
 
         # This needs its own error checking because status 400 isn&#39;t always a bad thing
         if result.status_code == 403:
@@ -518,7 +525,7 @@ class Parser:
 
         return message
 
-    def get_one_result(self, parser_label: str, document_id: str) -&gt; Union[str, dict]:
+    def get_one_result(self, parser_label: str, document_id: str, include_children: Optional[bool]=False) -&gt; Union[str, dict]:
         &#34;&#34;&#34;
         Get a specific document result from the given parser by document_id
 
@@ -531,7 +538,10 @@ class Parser:
         if not parser_id:
             return &#34;Unable to find parser&#34;
 
-        result = requests.get(self.BASE_URL + &#34;/results/{}/{}&#34;.format(parser_id, document_id), auth=self.AUTH)
+        if include_children:
+            result = requests.get(self.BASE_URL + &#34;/results/{}/{}/?include_children=true/&#34;.format(parser_id, document_id), auth=self.AUTH)
+        else:
+            result = requests.get(self.BASE_URL + &#34;/results/{}/{}&#34;.format(parser_id, document_id), auth=self.AUTH)
 
         # This needs its own error checking because status 400 isn&#39;t always a bad thing
         if result.status_code == 403:
@@ -690,7 +700,7 @@ class Parser:
 </details>
 </dd>
 <dt id="pydocparser.Parser.get_one_result"><code class="name flex">
-<span>def <span class="ident">get_one_result</span></span>(<span>self, parser_label: str, document_id: str) ‑> Union[str, dict]</span>
+<span>def <span class="ident">get_one_result</span></span>(<span>self, parser_label: str, document_id: str, include_children: Optional[bool] = False) ‑> Union[str, dict]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Get a specific document result from the given parser by document_id</p>
@@ -701,7 +711,7 @@ class Parser:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_one_result(self, parser_label: str, document_id: str) -&gt; Union[str, dict]:
+<pre><code class="python">def get_one_result(self, parser_label: str, document_id: str, include_children: Optional[bool]=False) -&gt; Union[str, dict]:
     &#34;&#34;&#34;
     Get a specific document result from the given parser by document_id
 
@@ -714,7 +724,10 @@ class Parser:
     if not parser_id:
         return &#34;Unable to find parser&#34;
 
-    result = requests.get(self.BASE_URL + &#34;/results/{}/{}&#34;.format(parser_id, document_id), auth=self.AUTH)
+    if include_children:
+        result = requests.get(self.BASE_URL + &#34;/results/{}/{}/?include_children=true/&#34;.format(parser_id, document_id), auth=self.AUTH)
+    else:
+        result = requests.get(self.BASE_URL + &#34;/results/{}/{}&#34;.format(parser_id, document_id), auth=self.AUTH)
 
     # This needs its own error checking because status 400 isn&#39;t always a bad thing
     if result.status_code == 403:
