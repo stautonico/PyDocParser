@@ -33,8 +33,8 @@ import requests
 
 __author__ = &#34;Steve Tautonico&#34;
 __contact__ = &#34;stautonico@gmail.com&#34;
-__date__ = &#34;6/3/2021&#34;
-__version__ = 2.0
+__date__ = &#34;7/7/2022&#34;
+__version__ = 2.1
 
 from typing import Optional, Union, List, Literal
 
@@ -51,6 +51,7 @@ class Parser:
         self.BASE_URL = &#34;https://api.docparser.com/v1&#34;
         self.KEY = &#34;&#34;
         self.AUTH = (self.KEY, &#34;&#34;)
+        self.PARSER_DICT = {}
 
     def login(self, key: str) -&gt; None:
         &#34;&#34;&#34;
@@ -61,6 +62,8 @@ class Parser:
         :return: None
         &#34;&#34;&#34;
         self.AUTH = (key, &#34;&#34;)
+        assert self.ping() == &#34;pong&#34;
+        self._populate_parser_dict(self.list_parsers())
 
     def ping(self) -&gt; Optional[str]:
         &#34;&#34;&#34;
@@ -113,13 +116,14 @@ class Parser:
 
         return &#34;Failed to get parser model layouts&#34;
 
-    def upload_file_by_path(self, file_path: str, parser_label: str) -&gt; str:
+    def upload_file_by_path(self, file_path: str, parser_label: str, remote_id: str) -&gt; str:
         &#34;&#34;&#34;
         Try to upload a file to the given parser label using a local file path.
         The http processor (requests) handles sending the file to the server
 
         :param file_path: The full file path of the file on the local file system
         :param parser_label: The label of the parser to upload the file to
+        :param remote_id: Association id for after the document has been parsed
         :return: An error message or the id of the uploaded document
         &#34;&#34;&#34;
         try:
@@ -133,7 +137,16 @@ class Parser:
         if not parser_id:
             return &#34;Unable to find parser&#34;
 
-        result = requests.post(self.BASE_URL + &#34;/document/upload/&#34; + parser_id, auth=self.AUTH, files={&#34;file&#34;: file})
+        payload = {
+            &#34;remote_id&#34;: remote_id
+        }
+
+        result = requests.post(
+            self.BASE_URL + &#34;/document/upload/&#34; + parser_id,
+            auth=self.AUTH,
+            files={&#34;file&#34;: file},
+            data=payload
+        )
 
         success, message = self._check_request(result)
 
@@ -143,13 +156,14 @@ class Parser:
 
         return message
 
-    def upload_file_by_base64(self, file_content: bytes, filename: str, parser_label: str) -&gt; str:
+    def upload_file_by_base64(self, file_content: bytes, filename: str, parser_label: str, remote_id: str) -&gt; str:
         &#34;&#34;&#34;
         Try to upload a file to the given parser label using the raw base64 content
 
         :param file_content: The base64 content of the file to upload
         :param filename: The name of the file being uploaded
         :param parser_label: The label of the parser to upload the file to
+        :param remote_id: Association id for after the document has been parsed
         :return: An error message or the id of the uploaded document
         &#34;&#34;&#34;
         parser_id = self._find_parser_id(parser_label)
@@ -159,7 +173,8 @@ class Parser:
 
         payload = {
             &#34;file_content&#34;: file_content,
-            &#34;file_name&#34;: filename
+            &#34;file_name&#34;: filename,
+            &#34;remote_id&#34;: remote_id
         }
 
         result = requests.post(self.BASE_URL + &#34;/document/upload/&#34; + parser_id, auth=self.AUTH, data=payload)
@@ -172,12 +187,13 @@ class Parser:
 
         return message
 
-    def upload_file_by_url(self, file_url: str, parser_label: str) -&gt; str:
+    def upload_file_by_url(self, file_url: str, parser_label: str, remote_id: str) -&gt; str:
         &#34;&#34;&#34;
         Try to upload a file to the given parser label by fetching a file from an external url
 
         :param file_url: The url of the file to fetch and send to docparser
         :param parser_label: The label of the parser to upload the file to
+        :param remote_id: Association id for after the document has been parsed
         :return: An error message or the id of the uploaded document
         &#34;&#34;&#34;
         parser_id = self._find_parser_id(parser_label)
@@ -186,7 +202,8 @@ class Parser:
             return &#34;Unable to find parser&#34;
 
         payload = {
-            &#34;url&#34;: file_url
+            &#34;url&#34;: file_url,
+            &#34;remote_id&#34;: remote_id
         }
 
         result = requests.post(self.BASE_URL + &#34;/document/fetch/&#34; + parser_id, auth=self.AUTH, data=payload)
@@ -265,7 +282,11 @@ class Parser:
         else:
             return loads(result.text)
 
-    ## Internal functions ##
+    # Internal functions #
+
+    def _populate_parser_dict(self, parsers: list[dict]):
+        for parser in parsers:
+            self.PARSER_DICT[parser[&#34;label&#34;]] = parser[&#34;id&#34;]
 
     def _find_parser_id(self, parser_label) -&gt; Optional[str]:
         &#34;&#34;&#34;
@@ -275,13 +296,13 @@ class Parser:
         :type parser_label: str
         :return: The id of the parser
         &#34;&#34;&#34;
-        parsers = self.list_parsers()
+        parser_id = self.PARSER_DICT[parser_label]
 
-        for p in parsers:
-            if p[&#34;label&#34;] == parser_label:
-                return p[&#34;id&#34;]
-
-        return None
+        if not parser_id:
+            self._populate_parser_dict(self.list_parsers())
+            return self.PARSER_DICT[parser_label]
+        else:
+            return parser_id
 
     @staticmethod
     def _check_request(request) -&gt; (bool, str):
@@ -332,6 +353,7 @@ class Parser:
         self.BASE_URL = &#34;https://api.docparser.com/v1&#34;
         self.KEY = &#34;&#34;
         self.AUTH = (self.KEY, &#34;&#34;)
+        self.PARSER_DICT = {}
 
     def login(self, key: str) -&gt; None:
         &#34;&#34;&#34;
@@ -342,6 +364,8 @@ class Parser:
         :return: None
         &#34;&#34;&#34;
         self.AUTH = (key, &#34;&#34;)
+        assert self.ping() == &#34;pong&#34;
+        self._populate_parser_dict(self.list_parsers())
 
     def ping(self) -&gt; Optional[str]:
         &#34;&#34;&#34;
@@ -394,13 +418,14 @@ class Parser:
 
         return &#34;Failed to get parser model layouts&#34;
 
-    def upload_file_by_path(self, file_path: str, parser_label: str) -&gt; str:
+    def upload_file_by_path(self, file_path: str, parser_label: str, remote_id: str) -&gt; str:
         &#34;&#34;&#34;
         Try to upload a file to the given parser label using a local file path.
         The http processor (requests) handles sending the file to the server
 
         :param file_path: The full file path of the file on the local file system
         :param parser_label: The label of the parser to upload the file to
+        :param remote_id: Association id for after the document has been parsed
         :return: An error message or the id of the uploaded document
         &#34;&#34;&#34;
         try:
@@ -414,7 +439,16 @@ class Parser:
         if not parser_id:
             return &#34;Unable to find parser&#34;
 
-        result = requests.post(self.BASE_URL + &#34;/document/upload/&#34; + parser_id, auth=self.AUTH, files={&#34;file&#34;: file})
+        payload = {
+            &#34;remote_id&#34;: remote_id
+        }
+
+        result = requests.post(
+            self.BASE_URL + &#34;/document/upload/&#34; + parser_id,
+            auth=self.AUTH,
+            files={&#34;file&#34;: file},
+            data=payload
+        )
 
         success, message = self._check_request(result)
 
@@ -424,13 +458,14 @@ class Parser:
 
         return message
 
-    def upload_file_by_base64(self, file_content: bytes, filename: str, parser_label: str) -&gt; str:
+    def upload_file_by_base64(self, file_content: bytes, filename: str, parser_label: str, remote_id: str) -&gt; str:
         &#34;&#34;&#34;
         Try to upload a file to the given parser label using the raw base64 content
 
         :param file_content: The base64 content of the file to upload
         :param filename: The name of the file being uploaded
         :param parser_label: The label of the parser to upload the file to
+        :param remote_id: Association id for after the document has been parsed
         :return: An error message or the id of the uploaded document
         &#34;&#34;&#34;
         parser_id = self._find_parser_id(parser_label)
@@ -440,7 +475,8 @@ class Parser:
 
         payload = {
             &#34;file_content&#34;: file_content,
-            &#34;file_name&#34;: filename
+            &#34;file_name&#34;: filename,
+            &#34;remote_id&#34;: remote_id
         }
 
         result = requests.post(self.BASE_URL + &#34;/document/upload/&#34; + parser_id, auth=self.AUTH, data=payload)
@@ -453,12 +489,13 @@ class Parser:
 
         return message
 
-    def upload_file_by_url(self, file_url: str, parser_label: str) -&gt; str:
+    def upload_file_by_url(self, file_url: str, parser_label: str, remote_id: str) -&gt; str:
         &#34;&#34;&#34;
         Try to upload a file to the given parser label by fetching a file from an external url
 
         :param file_url: The url of the file to fetch and send to docparser
         :param parser_label: The label of the parser to upload the file to
+        :param remote_id: Association id for after the document has been parsed
         :return: An error message or the id of the uploaded document
         &#34;&#34;&#34;
         parser_id = self._find_parser_id(parser_label)
@@ -467,7 +504,8 @@ class Parser:
             return &#34;Unable to find parser&#34;
 
         payload = {
-            &#34;url&#34;: file_url
+            &#34;url&#34;: file_url,
+            &#34;remote_id&#34;: remote_id
         }
 
         result = requests.post(self.BASE_URL + &#34;/document/fetch/&#34; + parser_id, auth=self.AUTH, data=payload)
@@ -546,7 +584,11 @@ class Parser:
         else:
             return loads(result.text)
 
-    ## Internal functions ##
+    # Internal functions #
+
+    def _populate_parser_dict(self, parsers: list[dict]):
+        for parser in parsers:
+            self.PARSER_DICT[parser[&#34;label&#34;]] = parser[&#34;id&#34;]
 
     def _find_parser_id(self, parser_label) -&gt; Optional[str]:
         &#34;&#34;&#34;
@@ -556,13 +598,13 @@ class Parser:
         :type parser_label: str
         :return: The id of the parser
         &#34;&#34;&#34;
-        parsers = self.list_parsers()
+        parser_id = self.PARSER_DICT[parser_label]
 
-        for p in parsers:
-            if p[&#34;label&#34;] == parser_label:
-                return p[&#34;id&#34;]
-
-        return None
+        if not parser_id:
+            self._populate_parser_dict(self.list_parsers())
+            return self.PARSER_DICT[parser_label]
+        else:
+            return parser_id
 
     @staticmethod
     def _check_request(request) -&gt; (bool, str):
@@ -760,7 +802,9 @@ class Parser:
     :type key: str
     :return: None
     &#34;&#34;&#34;
-    self.AUTH = (key, &#34;&#34;)</code></pre>
+    self.AUTH = (key, &#34;&#34;)
+    assert self.ping() == &#34;pong&#34;
+    self._populate_parser_dict(self.list_parsers())</code></pre>
 </details>
 </dd>
 <dt id="pydocparser.Parser.ping"><code class="name flex">
@@ -790,25 +834,27 @@ class Parser:
 </details>
 </dd>
 <dt id="pydocparser.Parser.upload_file_by_base64"><code class="name flex">
-<span>def <span class="ident">upload_file_by_base64</span></span>(<span>self, file_content: bytes, filename: str, parser_label: str) ‑> str</span>
+<span>def <span class="ident">upload_file_by_base64</span></span>(<span>self, file_content: bytes, filename: str, parser_label: str, remote_id: str) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Try to upload a file to the given parser label using the raw base64 content</p>
 <p>:param file_content: The base64 content of the file to upload
 :param filename: The name of the file being uploaded
 :param parser_label: The label of the parser to upload the file to
+:param remote_id: Association id for after the document has been parsed
 :return: An error message or the id of the uploaded document</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def upload_file_by_base64(self, file_content: bytes, filename: str, parser_label: str) -&gt; str:
+<pre><code class="python">def upload_file_by_base64(self, file_content: bytes, filename: str, parser_label: str, remote_id: str) -&gt; str:
     &#34;&#34;&#34;
     Try to upload a file to the given parser label using the raw base64 content
 
     :param file_content: The base64 content of the file to upload
     :param filename: The name of the file being uploaded
     :param parser_label: The label of the parser to upload the file to
+    :param remote_id: Association id for after the document has been parsed
     :return: An error message or the id of the uploaded document
     &#34;&#34;&#34;
     parser_id = self._find_parser_id(parser_label)
@@ -818,7 +864,8 @@ class Parser:
 
     payload = {
         &#34;file_content&#34;: file_content,
-        &#34;file_name&#34;: filename
+        &#34;file_name&#34;: filename,
+        &#34;remote_id&#34;: remote_id
     }
 
     result = requests.post(self.BASE_URL + &#34;/document/upload/&#34; + parser_id, auth=self.AUTH, data=payload)
@@ -833,25 +880,27 @@ class Parser:
 </details>
 </dd>
 <dt id="pydocparser.Parser.upload_file_by_path"><code class="name flex">
-<span>def <span class="ident">upload_file_by_path</span></span>(<span>self, file_path: str, parser_label: str) ‑> str</span>
+<span>def <span class="ident">upload_file_by_path</span></span>(<span>self, file_path: str, parser_label: str, remote_id: str) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Try to upload a file to the given parser label using a local file path.
 The http processor (requests) handles sending the file to the server</p>
 <p>:param file_path: The full file path of the file on the local file system
 :param parser_label: The label of the parser to upload the file to
+:param remote_id: Association id for after the document has been parsed
 :return: An error message or the id of the uploaded document</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def upload_file_by_path(self, file_path: str, parser_label: str) -&gt; str:
+<pre><code class="python">def upload_file_by_path(self, file_path: str, parser_label: str, remote_id: str) -&gt; str:
     &#34;&#34;&#34;
     Try to upload a file to the given parser label using a local file path.
     The http processor (requests) handles sending the file to the server
 
     :param file_path: The full file path of the file on the local file system
     :param parser_label: The label of the parser to upload the file to
+    :param remote_id: Association id for after the document has been parsed
     :return: An error message or the id of the uploaded document
     &#34;&#34;&#34;
     try:
@@ -865,7 +914,16 @@ The http processor (requests) handles sending the file to the server</p>
     if not parser_id:
         return &#34;Unable to find parser&#34;
 
-    result = requests.post(self.BASE_URL + &#34;/document/upload/&#34; + parser_id, auth=self.AUTH, files={&#34;file&#34;: file})
+    payload = {
+        &#34;remote_id&#34;: remote_id
+    }
+
+    result = requests.post(
+        self.BASE_URL + &#34;/document/upload/&#34; + parser_id,
+        auth=self.AUTH,
+        files={&#34;file&#34;: file},
+        data=payload
+    )
 
     success, message = self._check_request(result)
 
@@ -877,23 +935,25 @@ The http processor (requests) handles sending the file to the server</p>
 </details>
 </dd>
 <dt id="pydocparser.Parser.upload_file_by_url"><code class="name flex">
-<span>def <span class="ident">upload_file_by_url</span></span>(<span>self, file_url: str, parser_label: str) ‑> str</span>
+<span>def <span class="ident">upload_file_by_url</span></span>(<span>self, file_url: str, parser_label: str, remote_id: str) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Try to upload a file to the given parser label by fetching a file from an external url</p>
 <p>:param file_url: The url of the file to fetch and send to docparser
 :param parser_label: The label of the parser to upload the file to
+:param remote_id: Association id for after the document has been parsed
 :return: An error message or the id of the uploaded document</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def upload_file_by_url(self, file_url: str, parser_label: str) -&gt; str:
+<pre><code class="python">def upload_file_by_url(self, file_url: str, parser_label: str, remote_id: str) -&gt; str:
     &#34;&#34;&#34;
     Try to upload a file to the given parser label by fetching a file from an external url
 
     :param file_url: The url of the file to fetch and send to docparser
     :param parser_label: The label of the parser to upload the file to
+    :param remote_id: Association id for after the document has been parsed
     :return: An error message or the id of the uploaded document
     &#34;&#34;&#34;
     parser_id = self._find_parser_id(parser_label)
@@ -902,7 +962,8 @@ The http processor (requests) handles sending the file to the server</p>
         return &#34;Unable to find parser&#34;
 
     payload = {
-        &#34;url&#34;: file_url
+        &#34;url&#34;: file_url,
+        &#34;remote_id&#34;: remote_id
     }
 
     result = requests.post(self.BASE_URL + &#34;/document/fetch/&#34; + parser_id, auth=self.AUTH, data=payload)
